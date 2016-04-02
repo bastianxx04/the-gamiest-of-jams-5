@@ -1,12 +1,13 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(NavMeshObstacle))]
+[RequireComponent(typeof(NavMeshObstacle), typeof(Animator))]
 public class Door : MonoBehaviour, IInteract
 {
     public SpriteRenderer interactSprite;
     private NavMeshObstacle obstacle;
     private new Collider collider;
+    private Animator animator;
     private bool showInteract;
 
     public bool CanInteract { get { return Physics.OverlapBox(transform.position, Vector3.one * 0.4F).Count(col => col.gameObject != gameObject) == 0; } }
@@ -15,6 +16,7 @@ public class Door : MonoBehaviour, IInteract
     {
         obstacle = GetComponent<NavMeshObstacle>();
         collider = GetComponent<Collider>();
+        animator = GetComponent<Animator>();
     }
 
     void LateUpdate()
@@ -31,5 +33,6 @@ public class Door : MonoBehaviour, IInteract
     public void Interact(Teacher teacher)
     {
         collider.enabled = obstacle.enabled = !obstacle.enabled;
+        animator.SetBool("Open", collider.enabled);
     }
 }
