@@ -22,7 +22,7 @@ public class Child : MonoBehaviour, IInteract
     private bool showInteract;
     private Teacher interacting;
 
-    public bool CanInteract { get { return !interacting; } }
+    public bool CanInteract { get { return task.actionID == -1 && !interacting; } }
 
     public float Panic
     {
@@ -30,6 +30,13 @@ public class Child : MonoBehaviour, IInteract
         set
         {
             panic = Mathf.Clamp(value, 0, 1);
+
+            if (panic == 1 && PanicState < 3)
+            {
+                PanicState++;
+                panic = 0;
+            }
+
             modified = true;
         }
     }
@@ -40,6 +47,7 @@ public class Child : MonoBehaviour, IInteract
         set
         {
             panicState = Mathf.Clamp(value, 0, 3);
+            task.Task = null;
             modified = true;
         }
     }
@@ -55,6 +63,8 @@ public class Child : MonoBehaviour, IInteract
             get { return task; }
             set
             {
+                if (task != null && actionID != -1)
+                    task.childen[actionID] = null;
                 task = value;
                 actionID = -1;
             }
@@ -98,6 +108,12 @@ public class Child : MonoBehaviour, IInteract
         {
             if ((task.Task.transform.position - transform.position).magnitude < 1)
             {
+                if (PanicState == 1)
+                {
+                    task.Task = null;
+                    return;
+                }
+
                 var action = -1;
 
                 for (var i = 0; i < task.Task.actions.Length; i++)
@@ -132,7 +148,6 @@ public class Child : MonoBehaviour, IInteract
 
             if (task.timer <= 0)
             {
-                task.Task.childen[task.actionID] = null;
                 task.Task = null;
             }
         }
@@ -167,5 +182,10 @@ public class Child : MonoBehaviour, IInteract
         interacting.child = null;
         interacting = null;
         navAgent.stoppingDistance = 0F;
+
+        if (task.Task)
+        {
+            navAgent.SetDestination(task.Task.transform.position);
+        }
     }
 }
