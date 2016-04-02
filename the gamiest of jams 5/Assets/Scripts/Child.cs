@@ -6,13 +6,14 @@ public class Child : MonoBehaviour, IInteract
 {
     private const float ScreamRadius = 3;
     private const float ScreamIncrease = 0.2F;
+    private const float CollisionIncrease = 0.1F;
     private const float PanicReduct = 0.1F;
 
     [Range(0, 1)]
     public float panic;
     private bool modified;
     public SpriteRenderer interactSprite;
-    public ChildTask task;
+    public ChildTask task = new ChildTask();
     private NavMeshAgent navAgent;
     private Animator animator;
     private Transform graphics;
@@ -28,6 +29,23 @@ public class Child : MonoBehaviour, IInteract
         {
             panic = Mathf.Clamp(value, 0, 1);
             modified = true;
+        }
+    }
+
+    public struct ChildTask
+    {
+        private Task task;
+        public int actionID;
+        public float timer;
+
+        public Task Task
+        {
+            get { return task; }
+            set
+            {
+                task = value;
+                actionID = -1;
+            }
         }
     }
 
@@ -56,12 +74,50 @@ public class Child : MonoBehaviour, IInteract
                 child.Panic += Time.deltaTime * ScreamIncrease;
             }
         }
-        else
+        
+        if (task.Task == null)
         {
-            if (task == null)
+            task.Task = Task.GetTask();
+            navAgent.SetDestination(task.Task.transform.position);
+        }
+        else if (task.actionID == -1)
+        {
+            if ((task.Task.transform.position - transform.position).magnitude < 1)
             {
-                task = ChildTask.GetTask();
-                navAgent.SetDestination(task.transform.position);
+                var action = -1;
+
+                for (var i = 0; i < task.Task.actions.Length; i++)
+                {
+                    if (!task.Task.childen[i])
+                    {
+                        action = i;
+                        break;
+                    }
+                }
+
+                if (action == -1)
+                {
+                    task.Task = null;
+                }
+                else
+                {
+                    task.actionID = action;
+                    task.timer = task.Task.time;
+                    navAgent.SetDestination(task.Task.actions[action].transform.position);
+                }
+            }
+            else if (navAgent.velocity.magnitude < 1)
+            {
+                Panic += Time.deltaTime * ScreamIncrease;
+            }
+        }
+        else if ((task.Task.transform.position - transform.position).sqrMagnitude == 0)
+        {
+            task.timer -= Time.deltaTime;
+
+            if (task.timer <= 0)
+            {
+                task.Task = null;
             }
         }
     }
