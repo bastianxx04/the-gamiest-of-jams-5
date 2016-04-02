@@ -29,7 +29,7 @@ public class Child : MonoBehaviour, IInteract
         get { return panic; }
         set
         {
-            panic = Mathf.Clamp(value, 0, 1);
+            panic = Mathf.Clamp(value * Mathf.Pow(0.5F, PanicState), 0, 1);
 
             if (panic == 1 && PanicState < 3)
             {
@@ -91,11 +91,14 @@ public class Child : MonoBehaviour, IInteract
         animator.SetInteger("Direction", Mathf.FloorToInt(2.5F + transform.rotation.eulerAngles.y / 90) % 4);
         animator.SetBool("Walking", navAgent.velocity.sqrMagnitude > 0);
 
-        if (Panic == 1)
+        if (PanicState > 0)
         {
-            foreach (var child in Physics.OverlapSphere(transform.position, ScreamRadius).Select(col => col.GetComponent<Child>()).Where(chi => chi != null))
+            foreach (var child in Physics.OverlapSphere(transform.position, ScreamRadius * Mathf.Pow(2, PanicState - 1)).Select(col => col.GetComponent<Child>()).Where(chi => chi != null))
             {
-                child.Panic += Time.deltaTime * ScreamIncrease;
+                var dist = child.transform.position - transform.position;
+
+                if (Physics.RaycastAll(transform.position, dist, dist.magnitude).Count(hit => !hit.collider.GetComponent<Child>() && !hit.collider.GetComponent<Teacher>()) == 0)
+                    child.Panic += Time.deltaTime * ScreamIncrease * Mathf.Pow(2, PanicState - 1);
             }
         }
         
