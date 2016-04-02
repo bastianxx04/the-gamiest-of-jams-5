@@ -9,7 +9,7 @@ public class Door : MonoBehaviour, IInteract
     private new Collider collider;
 
     public SpriteRenderer InteractSprite { get { return interactSprite; } }
-    public bool CanInteract { get { return Physics.CheckBox(transform.position, Vector3.one * 0.5F); } }
+    public bool CanInteract { get { Debug.Log("Interact" + Physics.OverlapBox(transform.position, Vector3.one * 0.4F).Length); return Physics.OverlapBox(transform.position, Vector3.one * 0.4F).Length == 1; } }
 
     void Awake()
     {

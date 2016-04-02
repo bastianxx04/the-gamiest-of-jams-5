@@ -17,7 +17,7 @@ public class Teacher : MonoBehaviour
 
     void Update()
     {
-        foreach (var interact in Physics.OverlapSphere(transform.position + transform.forward * 0.5F, 0.4F).Select(col => col.GetComponent<IInteract>()).Where(col => col != null && col.CanInteract))
+        foreach (var interact in Physics.OverlapSphere(transform.position - transform.up * 0.8F, 0.4F, -1, QueryTriggerInteraction.Collide).Select(col => col.GetComponent<IInteract>()).Where(col => col != null && col.CanInteract))
         {
             interact.InteractSprite.enabled = true;
         }
