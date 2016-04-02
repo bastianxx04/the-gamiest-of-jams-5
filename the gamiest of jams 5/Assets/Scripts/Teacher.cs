@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(Animator))]
 public class Teacher : MonoBehaviour
 {
     public string axisHorizontal = "Horizontal";
@@ -10,10 +10,12 @@ public class Teacher : MonoBehaviour
     public float moveSpeed = 5;
 
     private new Rigidbody rigidbody;
+    private new Animator animator;
 
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -48,6 +50,7 @@ public class Teacher : MonoBehaviour
     void FixedUpdate()
     {
         var moveVector = new Vector2(Input.GetAxis(axisHorizontal), Input.GetAxis(axisVertical));
+        animator.SetBool("Walking", moveVector != Vector2.zero);
 
         if (moveVector == Vector2.zero)
         {
@@ -56,9 +59,8 @@ public class Teacher : MonoBehaviour
         }
 
         moveVector.Normalize();
-        var direction = Mathf.Atan2(-moveVector.x, -moveVector.y) * Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(0, direction, 0);
+        animator.SetInteger("Direction", Mathf.FloorToInt(0.5F + Mathf.Atan2(-moveVector.x, -moveVector.y) * 2 / Mathf.PI) % 4);
         rigidbody.velocity = new Vector3(moveVector.x, 0, moveVector.y) * moveSpeed;
     }
 }

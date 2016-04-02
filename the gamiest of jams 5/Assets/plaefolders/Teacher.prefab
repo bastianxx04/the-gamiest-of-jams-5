@@ -27,6 +27,7 @@ GameObject:
   - 136: {fileID: 13671054}
   - 114: {fileID: 11470764}
   - 54: {fileID: 5460142}
+  - 95: {fileID: 9526418}
   m_Layer: 0
   m_Name: Teacher
   m_TagString: Untagged
@@ -74,6 +75,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!95 &9526418
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 138868}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5999fa0f8ebe1e0469d07fdedb483f9b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &11470764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -87,6 +105,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   axisHorizontal: Horizontal
   axisVertical: Vertical
+  buttonInteract: Interact
   moveSpeed: 5
 --- !u!136 &13671054
 CapsuleCollider:
@@ -127,7 +146,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 78b5484723e428a49a6785e43841ee32, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f143370a9b19df944a27a6c61525fd4d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
