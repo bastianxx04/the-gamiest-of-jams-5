@@ -1,9 +1,21 @@
 fileFormatVersion: 2
 guid: f143370a9b19df944a27a6c61525fd4d
-timeCreated: 1459607310
+timeCreated: 1459607682
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: oldman_0
+    21300002: oldman_1
+    21300004: oldman_2
+    21300006: oldman_3
+    21300008: oldman_4
+    21300010: oldman_5
+    21300012: oldman_6
+    21300014: oldman_7
+    21300016: oldman_8
+    21300018: oldman_9
+    21300020: oldman_10
+    21300022: oldman_11
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -29,27 +41,159 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: -1
-    aniso: -1
+    filterMode: 0
+    aniso: 16
     mipBias: -1
-    wrapMode: -1
-  nPOTScale: 1
+    wrapMode: 1
+  nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
-  alphaIsTransparency: 0
-  textureType: -1
+  spritePixelsToUnits: 20
+  alphaIsTransparency: 1
+  textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: oldman_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 64
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: oldman_1
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 64
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: oldman_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: oldman_3
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 64
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: oldman_4
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 34
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: oldman_5
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 34
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: oldman_6
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 34
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: oldman_7
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 34
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: oldman_8
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 4
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: oldman_9
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 4
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: oldman_10
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 4
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: oldman_11
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 4
+        width: 14
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
     outline: []
   spritePackingTag: 
   userData: 
