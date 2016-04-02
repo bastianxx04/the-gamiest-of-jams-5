@@ -49,7 +49,7 @@ public class Teacher : MonoBehaviour
 
     void FixedUpdate()
     {
-        var moveVector = new Vector2(Input.GetAxis(axisHorizontal), Input.GetAxis(axisVertical));
+        var moveVector = new Vector2(Input.GetAxisRaw(axisHorizontal), Input.GetAxisRaw(axisVertical));
         animator.SetBool("Walking", moveVector != Vector2.zero);
 
         if (moveVector == Vector2.zero)
@@ -60,7 +60,7 @@ public class Teacher : MonoBehaviour
 
         moveVector.Normalize();
 
-        animator.SetInteger("Direction", Mathf.FloorToInt(0.5F + Mathf.Atan2(-moveVector.x, -moveVector.y) * 2 / Mathf.PI) % 4);
+        animator.SetInteger("Direction", Mathf.FloorToInt(4.5F + Mathf.Atan2(-moveVector.x, -moveVector.y) * 2 / Mathf.PI) % 4);
         rigidbody.velocity = new Vector3(moveVector.x, 0, moveVector.y) * moveSpeed;
     }
 }
