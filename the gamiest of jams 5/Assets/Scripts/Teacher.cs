@@ -18,8 +18,16 @@ public class Teacher : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
+    void OnMouseUpAsButton()
+    {
+        if (CamControl.Instance.teacher == null)
+            CamControl.Instance.teacher = this;
+    }
+
     void Update()
     {
+        if (CamControl.Instance.teacher != this) return;
+
         float sqrDist = 0;
         IInteract interact = null;
 
@@ -49,6 +57,8 @@ public class Teacher : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (CamControl.Instance.teacher != this) return;
+
         var moveVector = new Vector2(Input.GetAxisRaw(axisHorizontal), Input.GetAxisRaw(axisVertical));
         animator.SetBool("Walking", moveVector != Vector2.zero);
 
