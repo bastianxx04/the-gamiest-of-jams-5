@@ -5,14 +5,16 @@ using System.Collections;
 public class Door : MonoBehaviour
 {
     private NavMeshObstacle obstacle;
+    private new Collider collider;
 
     void Awake()
     {
         obstacle = GetComponent<NavMeshObstacle>();
+        collider = GetComponent<Collider>();
     }
 
     public void OpenCloseDoor()
     {
-        obstacle.enabled = !obstacle.enabled;
+        collider.enabled = obstacle.enabled = !obstacle.enabled;
     }
 }
