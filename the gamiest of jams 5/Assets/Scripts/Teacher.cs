@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Linq;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class Teacher : MonoBehaviour
@@ -13,6 +13,14 @@ public class Teacher : MonoBehaviour
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+    }
+
+    void Update()
+    {
+        foreach (var interact in Physics.OverlapSphere(transform.position + transform.forward * 0.5F, 0.4F).Select(col => col.GetComponent<IInteract>()).Where(col => col != null && col.CanInteract))
+        {
+            interact.InteractSprite.enabled = true;
+        }
     }
 
     void FixedUpdate()
