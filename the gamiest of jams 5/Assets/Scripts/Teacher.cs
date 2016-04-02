@@ -28,10 +28,12 @@ public class Teacher : MonoBehaviour
     {
         if (CamControl.Instance.teacher != this) return;
 
+        var dir = animator.GetInteger("Direction") * 0.5F * Mathf.PI;
+        var forward = new Vector3(Mathf.Sin(dir), 0, Mathf.Cos(dir));
         float sqrDist = 0;
         IInteract interact = null;
 
-        foreach (var col in Physics.OverlapSphere(transform.position - transform.forward * 0.8F, 0.4F, -1, QueryTriggerInteraction.Collide))
+        foreach (var col in Physics.OverlapSphere(transform.position - forward * 0.8F, 0.4F, -1, QueryTriggerInteraction.Collide))
         {
             var i = col.GetComponent<IInteract>();
 
