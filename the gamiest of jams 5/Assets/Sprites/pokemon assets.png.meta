@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 50460a19034e05743ad880a7f6c368af
-timeCreated: 1459600411
+timeCreated: 1459604794
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -26,6 +26,8 @@ TextureImporter:
     21300038: pokemon assets_19
     21300040: pokemon assets_20
     21300042: pokemon assets_21
+    21300044: pokemon assets_22
+    21300046: pokemon assets_23
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -334,6 +336,34 @@ TextureImporter:
         y: 229
         width: 48
         height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: pokemon assets_22
+      rect:
+        serializedVersion: 2
+        x: 447
+        y: 144
+        width: 44
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -22, y: 16}
+        - {x: -22, y: -12}
+        - {x: -19, y: -16}
+        - {x: 20, y: -16}
+        - {x: 22, y: -13}
+        - {x: 22, y: 16}
+    - name: pokemon assets_23
+      rect:
+        serializedVersion: 2
+        x: 488
+        y: 184
+        width: 24
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
