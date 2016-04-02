@@ -1,9 +1,11 @@
 fileFormatVersion: 2
-guid: 730cacbb655902249b07f39168583955
-timeCreated: 1459590809
+guid: 78b5484723e428a49a6785e43841ee32
+timeCreated: 1459590649
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: farmer_0
+    21300002: farmer_1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,26 +32,64 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
-    wrapMode: -1
-  nPOTScale: 1
+    wrapMode: 1
+  nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 100
-  alphaIsTransparency: 0
-  textureType: -1
+  spritePixelsToUnits: 32
+  alphaIsTransparency: 1
+  textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: farmer_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 12, y: 13}
+        - {x: -13, y: 13}
+        - {x: -16, y: 7}
+        - {x: -16, y: -5}
+        - {x: -10, y: -9}
+        - {x: 13, y: -9}
+        - {x: 16, y: -2}
+        - {x: 16, y: 10}
+    - name: farmer_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9, y: 12}
+        - {x: -16, y: 6}
+        - {x: -16, y: -8}
+        - {x: -8, y: -12}
+        - {x: 12, y: -12}
+        - {x: 16, y: -4}
+        - {x: 16, y: 6}
+        - {x: 9, y: 12}
     outline: []
   spritePackingTag: 
   userData: 
