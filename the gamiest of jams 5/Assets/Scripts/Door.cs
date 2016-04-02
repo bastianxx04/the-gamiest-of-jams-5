@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Linq;
+using UnityEngine;
 
 [RequireComponent(typeof(NavMeshObstacle))]
 public class Door : MonoBehaviour, IInteract
@@ -7,14 +7,25 @@ public class Door : MonoBehaviour, IInteract
     public SpriteRenderer interactSprite;
     private NavMeshObstacle obstacle;
     private new Collider collider;
+    private bool showInteract;
 
-    public SpriteRenderer InteractSprite { get { return interactSprite; } }
-    public bool CanInteract { get { Debug.Log("Interact" + Physics.OverlapBox(transform.position, Vector3.one * 0.4F).Length); return Physics.OverlapBox(transform.position, Vector3.one * 0.4F).Length == 1; } }
+    public bool CanInteract { get { return Physics.OverlapBox(transform.position, Vector3.one * 0.4F).Count(col => col.gameObject != gameObject) == 0; } }
 
     void Awake()
     {
         obstacle = GetComponent<NavMeshObstacle>();
         collider = GetComponent<Collider>();
+    }
+
+    void LateUpdate()
+    {
+        interactSprite.enabled = showInteract;
+        showInteract = false;
+    }
+
+    public void ShowInteract()
+    {
+        showInteract = true;
     }
 
     public void Interact()

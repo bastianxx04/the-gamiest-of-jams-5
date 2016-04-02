@@ -6,6 +6,7 @@ public class Teacher : MonoBehaviour
 {
     public string axisHorizontal = "Horizontal";
     public string axisVertical = "Vertical";
+    public string buttonInteract = "Interact";
     public float moveSpeed = 5;
 
     private new Rigidbody rigidbody;
@@ -17,9 +18,30 @@ public class Teacher : MonoBehaviour
 
     void Update()
     {
-        foreach (var interact in Physics.OverlapSphere(transform.position - transform.up * 0.8F, 0.4F, -1, QueryTriggerInteraction.Collide).Select(col => col.GetComponent<IInteract>()).Where(col => col != null && col.CanInteract))
+        float sqrDist = 0;
+        IInteract interact = null;
+
+        foreach (var col in Physics.OverlapSphere(transform.position - transform.forward * 0.8F, 0.4F, -1, QueryTriggerInteraction.Collide))
         {
-            interact.InteractSprite.enabled = true;
+            var i = col.GetComponent<IInteract>();
+
+            if (i == null || !i.CanInteract) continue;
+
+            var colSqrtDist = (col.transform.InverseTransformPoint(col.ClosestPointOnBounds(transform.position)) - transform.position).sqrMagnitude;
+
+            if (interact == null || sqrDist > colSqrtDist)
+            {
+                interact = i;
+                sqrDist = colSqrtDist;
+            }
+        }
+
+        if (interact != null)
+        {
+            interact.ShowInteract();
+
+            if (Input.GetButtonDown(buttonInteract))
+                interact.Interact();
         }
     }
 
