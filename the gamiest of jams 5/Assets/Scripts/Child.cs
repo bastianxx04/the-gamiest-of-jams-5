@@ -11,6 +11,8 @@ public class Child : MonoBehaviour, IInteract
 
     [Range(0, 1)]
     public float panic;
+    [Range(0, 3)]
+    public int panicState;
     private bool modified;
     public SpriteRenderer interactSprite;
     public ChildTask task = new ChildTask();
@@ -32,6 +34,16 @@ public class Child : MonoBehaviour, IInteract
         }
     }
 
+    public int PanicState
+    {
+        get { return panicState; }
+        set
+        {
+            panicState = Mathf.Clamp(value, 0, 3);
+            modified = true;
+        }
+    }
+
     public struct ChildTask
     {
         private Task task;
@@ -47,6 +59,8 @@ public class Child : MonoBehaviour, IInteract
                 actionID = -1;
             }
         }
+
+        public Transform Action { get { return Task.actions[actionID]; } }
     }
 
     void Awake()
@@ -103,7 +117,8 @@ public class Child : MonoBehaviour, IInteract
                 {
                     task.actionID = action;
                     task.timer = task.Task.time;
-                    navAgent.SetDestination(task.Task.actions[action].transform.position);
+                    task.Task.childen[task.actionID] = this;
+                    navAgent.SetDestination(task.Action.position);
                 }
             }
             else if (navAgent.velocity.magnitude < 1)
@@ -111,12 +126,13 @@ public class Child : MonoBehaviour, IInteract
                 Panic += Time.deltaTime * ScreamIncrease;
             }
         }
-        else if ((task.Task.transform.position - transform.position).sqrMagnitude == 0)
+        else if ((task.Action.position - transform.position).sqrMagnitude < 1)
         {
             task.timer -= Time.deltaTime;
 
             if (task.timer <= 0)
             {
+                task.Task.childen[task.actionID] = null;
                 task.Task = null;
             }
         }
