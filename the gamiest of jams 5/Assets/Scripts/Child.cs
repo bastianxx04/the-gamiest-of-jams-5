@@ -2,7 +2,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
-public class Child : MonoBehaviour
+public class Child : MonoBehaviour, IInteract
 {
     private const float ScreamRadius = 3;
     private const float ScreamIncrease = 0.2F;
@@ -11,12 +11,16 @@ public class Child : MonoBehaviour
     [Range(0, 1)]
     public float panic;
     private bool modified;
+    public SpriteRenderer interactSprite;
     public ChildTask task;
     private NavMeshAgent navAgent;
-    private new Animator animator;
+    private Animator animator;
     private Transform graphics;
+    private bool showInteract;
+    private Teacher interacting;
 
-    public Vector2 Position { get { return new Vector2(transform.position.x, transform.position.z); } }
+    public bool CanInteract { get { return !interacting; } }
+
     public float Panic
     {
         get { return panic; }
@@ -36,6 +40,11 @@ public class Child : MonoBehaviour
 
     void Update()
     {
+        if (interacting)
+        {
+            navAgent.SetDestination(interacting.transform.position);
+        }
+
         graphics.rotation = Quaternion.Euler(90, 0, 0);
         animator.SetInteger("Direction", Mathf.FloorToInt(2.5F + transform.rotation.eulerAngles.y / 90) % 4);
         animator.SetBool("Walking", navAgent.velocity.sqrMagnitude > 0);
@@ -64,6 +73,27 @@ public class Child : MonoBehaviour
             Panic -= Time.deltaTime * PanicReduct;
         }
 
+        interactSprite.enabled = showInteract;
+        showInteract = false;
         modified = false;
+    }
+
+    public void ShowInteract()
+    {
+        showInteract = true;
+    }
+
+    public void Interact(Teacher teacher)
+    {
+        teacher.child = this;
+        interacting = teacher;
+        navAgent.stoppingDistance = 0.7F;
+    }
+
+    public void Release()
+    {
+        interacting.child = null;
+        interacting = null;
+        navAgent.stoppingDistance = 0F;
     }
 }

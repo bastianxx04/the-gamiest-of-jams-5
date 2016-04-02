@@ -9,8 +9,10 @@ public class Teacher : MonoBehaviour
     public string buttonInteract = "Interact";
     public float moveSpeed = 5;
 
+    public Child child;
+
     private new Rigidbody rigidbody;
-    private new Animator animator;
+    private Animator animator;
 
     void Awake()
     {
@@ -27,6 +29,14 @@ public class Teacher : MonoBehaviour
     void Update()
     {
         if (CamControl.Instance.teacher != this) return;
+
+        if (child)
+        {
+            if (Input.GetButtonDown(buttonInteract))
+                child.Release();
+
+            return;
+        }
 
         var dir = animator.GetInteger("Direction") * 0.5F * Mathf.PI;
         var forward = new Vector3(Mathf.Sin(dir), 0, Mathf.Cos(dir));
@@ -53,15 +63,13 @@ public class Teacher : MonoBehaviour
             interact.ShowInteract();
 
             if (Input.GetButtonDown(buttonInteract))
-                interact.Interact();
+                interact.Interact(this);
         }
     }
 
     void FixedUpdate()
     {
-        if (CamControl.Instance.teacher != this) return;
-
-        var moveVector = new Vector2(Input.GetAxisRaw(axisHorizontal), Input.GetAxisRaw(axisVertical));
+        var moveVector = CamControl.Instance.teacher == this ? new Vector2(Input.GetAxisRaw(axisHorizontal), Input.GetAxisRaw(axisVertical)) : Vector2.zero;
         animator.SetBool("Walking", moveVector != Vector2.zero);
 
         if (moveVector == Vector2.zero)

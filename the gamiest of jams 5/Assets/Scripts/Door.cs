@@ -28,7 +28,7 @@ public class Door : MonoBehaviour, IInteract
         showInteract = true;
     }
 
-    public void Interact()
+    public void Interact(Teacher teacher)
     {
         collider.enabled = obstacle.enabled = !obstacle.enabled;
     }
