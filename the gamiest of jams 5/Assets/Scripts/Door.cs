@@ -32,7 +32,7 @@ public class Door : MonoBehaviour, IInteract
 
     public void Interact(Teacher teacher)
     {
-        collider.enabled = obstacle.enabled = !obstacle.enabled;
         animator.SetBool("Open", collider.enabled);
+        collider.enabled = obstacle.enabled = !obstacle.enabled;
     }
 }
