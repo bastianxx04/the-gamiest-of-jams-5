@@ -27,7 +27,7 @@ GameObject:
   - 195: {fileID: 19549740}
   - 114: {fileID: 11418098}
   - 95: {fileID: 9567836}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Child
   m_TagString: Untagged
   m_Icon: {fileID: 0}
