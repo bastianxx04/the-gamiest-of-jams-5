@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using UnityEngine;
 
-[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(NavMeshAgent), typeof(Animator))]
 public class Child : MonoBehaviour
 {
     private const float ScreamRadius = 3;
@@ -13,6 +13,8 @@ public class Child : MonoBehaviour
     private bool modified;
     public ChildTask task;
     private NavMeshAgent navAgent;
+    private new Animator animator;
+    private Transform graphics;
 
     public Vector2 Position { get { return new Vector2(transform.position.x, transform.position.z); } }
     public float Panic
@@ -28,10 +30,16 @@ public class Child : MonoBehaviour
     void Awake()
     {
         navAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        graphics = transform.GetChild(0);
     }
 
     void Update()
     {
+        graphics.rotation = Quaternion.Euler(90, 0, 0);
+        animator.SetInteger("Direction", Mathf.FloorToInt(2.5F + transform.rotation.eulerAngles.y / 90) % 4);
+        animator.SetBool("Walking", navAgent.velocity.sqrMagnitude > 0);
+
         if (Panic == 1)
         {
             foreach (var child in Physics.OverlapSphere(transform.position, ScreamRadius).Select(col => col.GetComponent<Child>()).Where(chi => chi != null))
