@@ -69,7 +69,8 @@ public class Teacher : MonoBehaviour
 
     void FixedUpdate()
     {
-        var moveVector = CamControl.Instance.teacher == this ? new Vector2(Input.GetAxisRaw(axisHorizontal), Input.GetAxisRaw(axisVertical)) : Vector2.zero;
+        var canMove = CamControl.Instance.teacher == this && (!child || child.PanicState == 0);
+        var moveVector = canMove ? new Vector2(Input.GetAxisRaw(axisHorizontal), Input.GetAxisRaw(axisVertical)) : Vector2.zero;
         animator.SetBool("Walking", moveVector != Vector2.zero);
 
         if (moveVector == Vector2.zero)

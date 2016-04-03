@@ -5,9 +5,10 @@ using UnityEngine;
 public class Child : MonoBehaviour, IInteract
 {
     private const float ScreamRadius = 3;
-    private const float ScreamIncrease = 0.2F;
-    private const float CollisionIncrease = 0.1F;
+    private const float ScreamIncrease = 0.1F;
+    private const float CollisionIncrease = 0.05F;
     private const float PanicReduct = 0.1F;
+    private const float TeacherReduct = 0.2F;
 
     [Range(0, 1)]
     public float panic;
@@ -100,6 +101,13 @@ public class Child : MonoBehaviour, IInteract
         if (interacting)
         {
             navAgent.SetDestination(interacting.transform.position);
+            Panic -= TeacherReduct * Time.deltaTime;
+
+            if (Panic == 0 && PanicState > 0)
+            {
+                PanicState--;
+                panic = 1;
+            }
         }
 
         graphics.transform.rotation = Quaternion.Euler(90, 0, 0);
@@ -112,11 +120,13 @@ public class Child : MonoBehaviour, IInteract
             {
                 var dist = child.transform.position - transform.position;
 
-                if (child.PanicState < PanicState && Physics.RaycastAll(transform.position, dist, dist.magnitude).Count(hit => !hit.collider.GetComponent<Child>() && !hit.collider.GetComponent<Teacher>()) == 0)
+                if (!child.interacting && child.PanicState < PanicState && Physics.RaycastAll(transform.position, dist, dist.magnitude).Count(hit => !hit.collider.GetComponent<Child>() && !hit.collider.GetComponent<Teacher>()) == 0)
                     child.Panic += Time.deltaTime * ScreamIncrease * Mathf.Pow(2, PanicState - child.PanicState - 1);
             }
         }
-        
+
+        if (interacting) return;
+
         if (task.Task == null)
         {
             task.Task = Task.GetTask();
