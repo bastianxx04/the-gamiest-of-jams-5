@@ -18,7 +18,8 @@ public class Child : MonoBehaviour, IInteract
     public ChildTask task = new ChildTask();
     private NavMeshAgent navAgent;
     private Animator animator;
-    private Transform graphics;
+    private SpriteRenderer graphics;
+    private ParticleSystem particles;
     private bool showInteract;
     private Teacher interacting;
 
@@ -29,12 +30,13 @@ public class Child : MonoBehaviour, IInteract
         get { return panic; }
         set
         {
-            panic = Mathf.Clamp(value * Mathf.Pow(0.5F, PanicState), 0, 1);
+            panic = Mathf.Clamp(value, 0, 1);
+            graphics.color = PanicState != 3 ? PanicState != 2 ? PanicState != 1 ? Color.white : Color.Lerp(Color.white, Color.red, panic) : Color.Lerp(Color.red, Color.blue, panic) : Color.blue;
 
             if (panic == 1 && PanicState < 3)
             {
-                PanicState++;
                 panic = 0;
+                PanicState++;
             }
 
             modified = true;
@@ -47,8 +49,20 @@ public class Child : MonoBehaviour, IInteract
         set
         {
             panicState = Mathf.Clamp(value, 0, 3);
+            graphics.color = PanicState != 3 ? PanicState != 2 ? PanicState != 1 ? Color.white : Color.Lerp(Color.white, Color.red, panic) : Color.Lerp(Color.red, Color.blue, panic) : Color.blue;
             task.Task = null;
             modified = true;
+
+            if (panicState > 0)
+            {
+                if (particles.isStopped)
+                    particles.Play();
+            }
+            else
+            {
+                if (particles.isPlaying)
+                    particles.Stop();
+            }
         }
     }
 
@@ -77,7 +91,8 @@ public class Child : MonoBehaviour, IInteract
     {
         navAgent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        graphics = transform.GetChild(0);
+        graphics = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        particles = transform.GetChild(1).GetComponent<ParticleSystem>();
     }
 
     void Update()
@@ -87,7 +102,7 @@ public class Child : MonoBehaviour, IInteract
             navAgent.SetDestination(interacting.transform.position);
         }
 
-        graphics.rotation = Quaternion.Euler(90, 0, 0);
+        graphics.transform.rotation = Quaternion.Euler(90, 0, 0);
         animator.SetInteger("Direction", Mathf.FloorToInt(2.5F + transform.rotation.eulerAngles.y / 90) % 4);
         animator.SetBool("Walking", navAgent.velocity.sqrMagnitude > 0);
 
@@ -97,8 +112,8 @@ public class Child : MonoBehaviour, IInteract
             {
                 var dist = child.transform.position - transform.position;
 
-                if (Physics.RaycastAll(transform.position, dist, dist.magnitude).Count(hit => !hit.collider.GetComponent<Child>() && !hit.collider.GetComponent<Teacher>()) == 0)
-                    child.Panic += Time.deltaTime * ScreamIncrease * Mathf.Pow(2, PanicState - 1);
+                if (child.PanicState < PanicState && Physics.RaycastAll(transform.position, dist, dist.magnitude).Count(hit => !hit.collider.GetComponent<Child>() && !hit.collider.GetComponent<Teacher>()) == 0)
+                    child.Panic += Time.deltaTime * ScreamIncrease * Mathf.Pow(2, PanicState - child.PanicState - 1);
             }
         }
         
@@ -140,14 +155,22 @@ public class Child : MonoBehaviour, IInteract
                     navAgent.SetDestination(task.Action.position);
                 }
             }
-            else if (navAgent.velocity.magnitude < 1)
+            else if (!interacting && navAgent.velocity.magnitude < 1)
             {
-                Panic += Time.deltaTime * ScreamIncrease;
+                Panic += Time.deltaTime * CollisionIncrease * Mathf.Pow(0.5F, PanicState);
+                Debug.DrawLine(transform.position, transform.position + Vector3.up * 2);
             }
         }
         else if ((task.Action.position - transform.position).sqrMagnitude < 1)
         {
             task.timer -= Time.deltaTime;
+
+            if (Random.Range(0F, 1F) > Mathf.Pow(1 - task.Task.failChance, Time.deltaTime))
+            {
+                Debug.Log("Panic");
+                PanicState += task.Task.failPanic;
+                task.Task = null;
+            }
 
             if (task.timer <= 0)
             {
@@ -160,7 +183,7 @@ public class Child : MonoBehaviour, IInteract
     {
         if (Panic < 1 && !modified)
         {
-            Panic -= Time.deltaTime * PanicReduct;
+            Panic -= Time.deltaTime * PanicReduct * Mathf.Pow(0.5F, PanicState);
         }
 
         interactSprite.enabled = showInteract;

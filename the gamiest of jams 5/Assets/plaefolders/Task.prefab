@@ -41,6 +41,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 5
+  failChance: 0.001
+  failPanic: 1
   actions:
   - {fileID: 497340}
 --- !u!212 &21248550

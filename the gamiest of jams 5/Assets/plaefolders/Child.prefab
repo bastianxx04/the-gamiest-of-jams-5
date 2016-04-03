@@ -48,7 +48,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &172350
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   panic: 0
+  panicState: 0
   interactSprite: {fileID: 21230906}
-  task: {fileID: 0}
 --- !u!136 &13679324
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -230,8 +230,8 @@ ParticleSystem:
   randomSeed: 0
   looping: 1
   prewarm: 0
-  playOnAwake: 1
-  moveWithTransform: 0
+  playOnAwake: 0
+  moveWithTransform: 1
   scalingMode: 2
   InitialModule:
     serializedVersion: 2

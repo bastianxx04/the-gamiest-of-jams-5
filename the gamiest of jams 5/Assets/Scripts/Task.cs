@@ -6,6 +6,9 @@ public class Task : MonoBehaviour
     public static readonly List<Task> Tasks = new List<Task>();
     
     public float time;
+    [Range(0, 1)]
+    public float failChance;
+    public int failPanic;
     public Transform[] actions;
     [System.NonSerialized]
     public Child[] childen;
